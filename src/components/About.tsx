@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import Reveal from "@/components/Reveal";
 import {
+  IconArrowRight,
   IconHardHat,
   IconShieldCheck,
   IconTarget,
@@ -71,6 +73,15 @@ export default function About() {
                 bem executadas, mantendo uma comunicação próxima e
                 transparente com os nossos clientes em todas as fases.
               </p>
+            </Reveal>
+
+            <Reveal delay={3}>
+              <Link
+                href="/empresa"
+                className="mt-6 inline-flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-wider text-brand-600 transition-all hover:gap-3 hover:text-brand-700"
+              >
+                Conhecer a empresa <IconArrowRight size={16} />
+              </Link>
             </Reveal>
 
             <Reveal delay={3}>

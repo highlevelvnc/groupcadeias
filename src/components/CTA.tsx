@@ -42,7 +42,7 @@ export default function CTA() {
 
           <Reveal delay={3}>
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-              <a href="#contactos" className="btn-primary">
+              <a href="/#contactos" className="btn-primary">
                 Pedir Orçamento
                 <IconArrowRight size={18} />
               </a>

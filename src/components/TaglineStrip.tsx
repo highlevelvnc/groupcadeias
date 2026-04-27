@@ -48,7 +48,7 @@ export default function TaglineStrip() {
           </div>
 
           <a
-            href="#contactos"
+            href="/#contactos"
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 font-display text-xs font-semibold uppercase tracking-wider text-brand-900 transition-all hover:-translate-y-0.5 hover:bg-brand-100"
           >
             Pedir orçamento

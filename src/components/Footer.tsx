@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import Logo from "@/components/Logo";
 import {
   IconExternalLink,
@@ -8,25 +10,19 @@ import {
   IconWhatsApp,
 } from "@/components/icons";
 import { siteConfig } from "@/lib/site-config";
+import { SERVICES } from "@/lib/services-data";
 
 const NAV_QUICK = [
-  { label: "Início", href: "#inicio" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Serviços", href: "#servicos" },
-  { label: "Projetos", href: "#projetos" },
-  { label: "Contactos", href: "#contactos" },
-];
-
-const NAV_SERVICES = [
-  { label: "Construção Civil", href: "#servicos" },
-  { label: "Remodelações", href: "#servicos" },
-  { label: "Engenharia e Projetos", href: "#servicos" },
-  { label: "Reabilitação", href: "#servicos" },
-  { label: "Gestão de Obras", href: "#servicos" },
+  { label: "Início", href: "/" },
+  { label: "Empresa", href: "/empresa" },
+  { label: "Serviços", href: "/servicos" },
+  { label: "Projetos", href: "/projetos" },
+  { label: "Contactos", href: "/#contactos" },
 ];
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const topServices = SERVICES.slice(0, 5);
 
   return (
     <footer className="relative overflow-hidden bg-brand-900 text-white">
@@ -85,12 +81,12 @@ export default function Footer() {
             <ul className="mt-5 space-y-3">
               {NAV_QUICK.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
                     className="font-body text-sm text-white/80 transition-colors hover:text-white"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -102,14 +98,14 @@ export default function Footer() {
               Serviços
             </h4>
             <ul className="mt-5 space-y-3">
-              {NAV_SERVICES.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
+              {topServices.map((service) => (
+                <li key={service.slug}>
+                  <Link
+                    href={`/servicos/${service.slug}`}
                     className="font-body text-sm text-white/80 transition-colors hover:text-white"
                   >
-                    {link.label}
-                  </a>
+                    {service.shortTitle}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -166,9 +162,7 @@ export default function Footer() {
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-body text-xs text-white/50">
             <span>NIF disponível mediante pedido</span>
-            <span aria-hidden className="hidden md:inline">
-              ·
-            </span>
+            <span aria-hidden className="hidden md:inline">·</span>
             <span>{siteConfig.address.city} · Portugal</span>
           </div>
         </div>
