@@ -12,11 +12,15 @@
   }
 
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 96px; /* Header fixo (h-20 = 80px) + folga */
+    /* scroll-behavior gerido pelo Lenis (LenisProvider). Fallback nativo só se o Lenis não estiver ativo. */
+    scroll-padding-top: 96px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  html.lenis-disabled {
+    scroll-behavior: smooth;
   }
 
   section[id] {

@@ -93,6 +93,10 @@ const config: Config = {
           "30%": { opacity: "1" },
           "100%": { opacity: "0", transform: "translateY(14px)" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.7s ease-out forwards",
@@ -101,6 +105,7 @@ const config: Config = {
         "slide-in-right": "slide-in-right 0.7s ease-out forwards",
         "ken-burns": "ken-burns 14s ease-out forwards",
         "scroll-dot": "scroll-dot 1.8s ease-in-out infinite",
+        marquee: "marquee 38s linear infinite",
       },
     },
   },

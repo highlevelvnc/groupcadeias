@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 
+import LenisProvider from "@/components/providers/LenisProvider";
 import { siteConfig } from "@/lib/site-config";
 
 import "./globals.css";
@@ -141,7 +142,7 @@ export default function RootLayout({
   return (
     <html lang="pt-PT" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="min-h-screen bg-white text-ink-800 antialiased">
-        {children}
+        <LenisProvider>{children}</LenisProvider>
         <Script
           id="ld-json-organization"
           type="application/ld+json"
