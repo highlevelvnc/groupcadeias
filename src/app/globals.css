@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --brand-900: #001e40;
+    --brand-700: #003366;
+    --brand-600: #0055a4;
+    --brand-500: #175ead;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px; /* Header fixo (h-20 = 80px) + folga */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  section[id] {
+    scroll-margin-top: 96px;
+  }
+
+  body {
+    @apply bg-white font-body text-ink-800;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    @apply bg-brand-600/90 text-white;
+  }
+
+  /* Scrollbar — discreto e técnico */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ink-50;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-ink-200;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-500;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-6 md:px-10 lg:px-12;
+  }
+
+  .label-caps {
+    @apply text-label-caps font-semibold uppercase;
+  }
+
+  .heading-display {
+    @apply font-display font-semibold leading-tight tracking-tight text-brand-900;
+  }
+
+  /* Botão primário — azul médio, alto contraste */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 py-3.5
+      font-display text-sm font-semibold uppercase tracking-wider text-white
+      shadow-precision transition-all duration-200
+      hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-precision-lg
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600
+      active:translate-y-0 active:opacity-90;
+  }
+
+  /* Botão secundário — outline sobre fundo escuro */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/70
+      bg-white/0 px-6 py-3.5 font-display text-sm font-semibold uppercase tracking-wider text-white
+      backdrop-blur transition-all duration-200
+      hover:border-white hover:bg-white/10
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+  }
+
+  /* Botão outline para fundos claros */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-brand-700
+      bg-white px-6 py-3.5 font-display text-sm font-semibold uppercase tracking-wider text-brand-700
+      transition-all duration-200
+      hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-precision
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700;
+  }
+
+  /* Cartão técnico */
+  .card-tech {
+    @apply rounded-2xl border border-ink-100 bg-white shadow-precision transition-all duration-300
+      hover:-translate-y-1 hover:border-brand-300 hover:shadow-precision-lg;
+  }
+
+  /* Divisor estrutural azul */
+  .rule-brand {
+    @apply h-1 w-16 rounded-full bg-brand-600;
+  }
+
+  /* Inputs robustos */
+  .input-tech {
+    @apply w-full rounded-lg border border-ink-200 bg-white px-4 py-3 text-base text-ink-800
+      placeholder:text-ink-400
+      transition-all duration-200
+      focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30;
+  }
+}
+
+@layer utilities {
+  /* Reveal-on-scroll: estado inicial; .is-visible é aplicado por IntersectionObserver */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 {
+    transition-delay: 80ms;
+  }
+  .reveal-delay-2 {
+    transition-delay: 160ms;
+  }
+  .reveal-delay-3 {
+    transition-delay: 240ms;
+  }
+  .reveal-delay-4 {
+    transition-delay: 320ms;
+  }
+
+  /* Respeitar utilizadores que preferem menos animação */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
