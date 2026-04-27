@@ -30,6 +30,17 @@
   body {
     @apply bg-white font-body text-ink-800;
     font-feature-settings: "ss01", "cv11";
+    /* Remove o "flash" cinzento ao tocar em links/botões em Android e iOS */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Botões e links interativos: elimina o delay de 300ms residual em mobile
+     e permite o browser otimizar a área de toque. */
+  a,
+  button,
+  [role="button"],
+  input[type="submit"] {
+    touch-action: manipulation;
   }
 
   ::selection {

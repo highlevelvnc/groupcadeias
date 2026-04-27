@@ -8,6 +8,8 @@ import Counter from "@/components/motion/Counter";
 import MagneticButton from "@/components/motion/MagneticButton";
 import TextReveal from "@/components/motion/TextReveal";
 import { IconArrowRight, IconCheck, IconStar } from "@/components/icons";
+import { useIsDesktop } from "@/hooks/useMediaQuery";
+import { cn } from "@/lib/cn";
 import { siteConfig } from "@/lib/site-config";
 
 const STATS = [
@@ -24,24 +26,41 @@ const TRUST_POINTS = [
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const isDesktop = useIsDesktop();
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  // Parallax multi-layer: imagem desce mais lento, grid mais rápido, conteúdo subtle
-  const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const yGrid = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  // Parallax multi-layer: SÓ desktop. Em mobile o range é zero (sem repaints,
+  // sem GPU work extra, sem jank em devices entry-level).
+  const yImage = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", isDesktop ? "20%" : "0%"],
+  );
+  const yGrid = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", isDesktop ? "40%" : "0%"],
+  );
+  const yContent = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", isDesktop ? "10%" : "0%"],
+  );
   const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0]);
 
   return (
     <section
       ref={ref}
       id="inicio"
-      className="relative isolate flex min-h-[700px] items-center overflow-hidden bg-brand-900 text-white sm:min-h-[760px] lg:min-h-[860px]"
+      // Mobile: 100svh (small viewport, com address bar visível) — nunca > altura do device.
+      // Desktop: tamanhos fixos para presença cinematográfica.
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-brand-900 text-white sm:min-h-[760px] lg:min-h-[860px]"
     >
-      {/* Layer 1: imagem com parallax + ken-burns + zoom-in entrada */}
+      {/* Layer 1: imagem com parallax + ken-burns só em desktop */}
       <motion.div
         style={{ y: yImage }}
         className="absolute inset-0 -z-20 will-change-transform"
@@ -52,14 +71,17 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover animate-ken-burns"
+          className={cn(
+            "object-cover",
+            isDesktop && "animate-ken-burns", // ken-burns só desktop — evita GPU overdraw em mobile
+          )}
         />
       </motion.div>
 
       {/* Layer 2: overlay azul-corporate */}
       <div className="absolute inset-0 -z-10 bg-hero-overlay" />
 
-      {/* Layer 3: blueprint grid com parallax mais agressivo */}
+      {/* Layer 3: blueprint grid com parallax mais agressivo (desktop) */}
       <motion.div
         style={{ y: yGrid }}
         className="absolute inset-0 -z-10 bg-blueprint-grid bg-grid-32 opacity-25 will-change-transform"

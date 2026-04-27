@@ -31,8 +31,12 @@ export default function IntroLoader() {
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    // Em mobile o intro loader é desativado por completo:
+    // bloquear o LCP em conexões 4G arruina o Lighthouse e a perceção do user.
+    // Os utilizadores mobile esperam landing pages instantâneas.
+    const isMobile = window.matchMedia("(max-width: 1023px)").matches;
 
-    if (alreadyShown || prefersReduced) {
+    if (alreadyShown || prefersReduced || isMobile) {
       setShow(false);
       return;
     }

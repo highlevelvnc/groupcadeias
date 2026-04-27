@@ -16,7 +16,15 @@ export default function LenisProvider({ children }: { children: ReactNode }) {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (prefersReducedMotion) {
+    // Lenis é desativado em mobile/tablet:
+    //  - O scroll nativo iOS/Android tem momentum impecável e pull-to-refresh
+    //  - Lenis em touch pode parecer "drag-y" e competir com o scroll nativo
+    //  - Devices low-end ganham FPS sem o raf loop extra
+    const isTouchOrMobile = window.matchMedia(
+      "(hover: none), (max-width: 1023px)",
+    ).matches;
+
+    if (prefersReducedMotion || isTouchOrMobile) {
       document.documentElement.classList.add("lenis-disabled");
       return;
     }

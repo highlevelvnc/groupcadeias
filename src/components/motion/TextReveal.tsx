@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { createElement, useRef, type ReactNode } from "react";
+import { createElement, useRef } from "react";
 
+import { useIsMobile } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/cn";
 
 type TextRevealProps = {
@@ -35,6 +36,15 @@ export default function TextReveal({
 }: TextRevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
+  const isMobile = useIsMobile();
+
+  // Em mobile aceleramos a animação:
+  //  - duration -30%: o user vê o headline pronto antes de rolar
+  //  - stagger -50%: total < 600ms mesmo em frases longas
+  //  - delay reduzido para 70% (entrada mais imediata)
+  const effectiveDuration = isMobile ? duration * 0.7 : duration;
+  const effectiveStagger = isMobile ? stagger * 0.5 : stagger;
+  const effectiveDelay = isMobile ? delay * 0.7 : delay;
 
   const words = children.split(/(\s+)/); // mantém espaços como tokens
 
@@ -52,8 +62,8 @@ export default function TextReveal({
               initial={{ y: "110%" }}
               animate={inView ? { y: 0 } : { y: "110%" }}
               transition={{
-                duration,
-                delay: delay + (idx / 2) * stagger,
+                duration: effectiveDuration,
+                delay: effectiveDelay + (idx / 2) * effectiveStagger,
                 ease: [0.22, 1, 0.36, 1], // exp-out
               }}
             >

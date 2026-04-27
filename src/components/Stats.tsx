@@ -47,21 +47,22 @@ export default function Stats() {
           <div className="mx-auto mt-4 rule-brand" />
         </Reveal>
 
-        <ul className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-ink-100 bg-ink-100 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Em mobile mostramos 2x2 (mais denso, menos scroll); desktop fica 1x4. */}
+        <ul className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink-100 bg-ink-100 lg:grid-cols-4">
           {STATS.map((stat, idx) => (
             <Reveal
               as="li"
               key={stat.label}
               delay={(idx % 4) as 0 | 1 | 2 | 3}
-              className="bg-white p-7 transition-colors hover:bg-brand-50"
+              className="bg-white p-5 transition-colors hover:bg-brand-50 sm:p-6 lg:p-7"
             >
-              <p className="font-display text-5xl font-bold leading-none tracking-tight text-brand-900 sm:text-6xl">
+              <p className="font-display text-4xl font-bold leading-none tracking-tight text-brand-900 sm:text-5xl lg:text-6xl">
                 <Counter to={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="mt-4 font-display text-sm font-semibold uppercase tracking-wider text-brand-600">
+              <p className="mt-3 font-display text-xs font-semibold uppercase tracking-wider text-brand-600 sm:text-sm">
                 {stat.label}
               </p>
-              <p className="mt-2 font-body text-sm leading-relaxed text-ink-500">
+              <p className="mt-2 hidden font-body text-sm leading-relaxed text-ink-500 sm:block">
                 {stat.sub}
               </p>
             </Reveal>
